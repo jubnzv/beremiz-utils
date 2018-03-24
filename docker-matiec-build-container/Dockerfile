@@ -1,46 +1,40 @@
-# Matiec build container
+# MATIEC build container
 #
-# Contains complete matiec installation to perform compilation for languages in
-# IEC 61131-3 standart.
-# See more information about matiec at: https://bitbucket.org/mjsousa/matiec
+# Description:
+#
+#   Contains complete matiec installation to perform compilation for languages in
+#   IEC 61131-3 standart.
+#
+#   See more information about matiec at: https://bitbucket.org/mjsousa/matiec
 #
 # Usage:
 #
-# To compile IEC-sources in current directory:
-# docker run --rm -v "$(pwd):/src" -t matiec_build_container iec_source_file.st
+#   To compile IEC-sources from current directory:
+#   docker run --rm -v "$(pwd)":/src jubnzv1/build-matiec:latest iec_source_file.st
+#
 
-FROM debian:stretch
+FROM alpine:3.7
 
-LABEL description="Matiec build container"
+LABEL description="MATIEC build container"
 LABEL maintainer="Georgy Komarov <jubnzv@gmail.com>"
 
-# Install dependencies
-RUN apt-get update && apt-get -y upgrade && \
-    apt-get -y install  flex \
-                        bison \
-                        mercurial \
-                        make \
-                        gcc \
-                        g++ \
-                        autoconf \
-                        sudo adduser && \
-    apt-get autoremove -y; apt-get clean; \
-    rm /var/lib/apt/lists/* -r; rm -rf /usr/share/man/*
+# Install build tools
+RUN apk add --no-cache \
+    gcc g++ libstdc++ bison flex autoconf automake make mercurial musl-dev
 
-# Install latest matiec version from official repo
+# Build latest MATIEC version from official repo
 RUN hg clone https://bitbucket.org/mjsousa/matiec/ && \
-    cd matiec && \
+    cd /matiec && \
     autoreconf -i && \
-    ./configure && \
+    ./configure \
     make && make install
 
-# Create user and initialize build environment
-RUN adduser --disabled-password builder; \
-    echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+# Initialize MATIEC workflow
+ENV MATIEC_INCLUDE_PATH /matiec/lib
+ENV MATIEC_C_INCLUDE_PATH /matiec/lib/C
+ENV PATH /matiec:$PATH
+RUN mkdir -pv /src
 
-USER builder
-
-COPY run.sh /
-
-ENTRYPOINT ["/run.sh"]
-
+# Build script
+COPY run.sh /matiec
+ENTRYPOINT ["/matiec/run.sh"]

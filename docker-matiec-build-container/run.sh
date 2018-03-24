@@ -1,6 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
-ARGS=$@
-
-pushd /src
-iec2c -I/matiec/lib $ARGS
+cd /src
+iec2c -I$MATIEC_INCLUDE_PATH $@

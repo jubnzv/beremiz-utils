@@ -1,0 +1,6 @@
+#!/bin/bash
+
+ARGS=$@
+
+pushd /source/doc
+make $ARGS

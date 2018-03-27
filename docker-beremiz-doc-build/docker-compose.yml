@@ -1,6 +1,0 @@
-version: '2'
-
-services:
-  build_env:
-    build: .
-    image: jubnzv1/beremiz-doc-build

@@ -6,7 +6,7 @@
 # MAKEOPTS = "html latexpdf"
 # docker run --rm -v $(BEREMIZ_SRC):/source -t jubnzv/beremiz-doc-build $MAKEOPTS
 #
-# See more at: https://github.com/jubnzv/beremiz
+# See more at: https://github.com/sm1820/beremiz
 #
 
 FROM debian:stretch
@@ -30,6 +30,8 @@ RUN apt-get update && apt-get -y upgrade && \
                    texlive-fonts-recommended \
                    texlive-generic-extra \
                    texlive-latex-extra \
+                   texlive-fonts-extra \
+                   texlive-lang-other cm-super texlive-xetex \
                    texlive-latex-recommended && \
     apt-get autoremove -y; apt-get clean; \
     rm /var/lib/apt/lists/* -r; rm -rf /usr/share/man/*

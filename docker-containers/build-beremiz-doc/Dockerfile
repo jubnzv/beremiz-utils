@@ -24,6 +24,7 @@ RUN apt-get update && apt-get -y upgrade && \
                    graphviz \
                    python-breathe \
                    breathe-doc \
+                   # `pdflatex` target dependencies
                    texlive-base \
                    texlive-latex-base \
                    texlive-lang-cyrillic \
@@ -32,7 +33,9 @@ RUN apt-get update && apt-get -y upgrade && \
                    texlive-latex-extra \
                    texlive-fonts-extra \
                    texlive-lang-other cm-super texlive-xetex \
-                   texlive-latex-recommended && \
+                   texlive-latex-recommended \
+                   # `xelatexpdf` target dependencies
+                   texlive-xetex && \
     apt-get autoremove -y; apt-get clean; \
     rm /var/lib/apt/lists/* -r; rm -rf /usr/share/man/*
 

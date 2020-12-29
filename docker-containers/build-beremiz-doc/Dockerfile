@@ -2,9 +2,8 @@
 # Build container that contains complete environment with all required packages
 # to build Beremiz IDE documentation regardless of host OS.
 #
-# Usage:
-# MAKEOPTS = "html latexpdf"
-# docker run --rm -v $(BEREMIZ_SRC):/source -t jubnzv/beremiz-doc-build $MAKEOPTS
+# Use the following command to build pdf and html documents:
+# docker run --rm -v $(BEREMIZ_SRC):/source -t jubnzv1/beremiz-doc-build xelatexpdf html
 #
 # See more at: https://github.com/sm1820/beremiz
 #

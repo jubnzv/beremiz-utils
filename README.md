@@ -13,3 +13,9 @@ Contains complete [MatIEC](https://bitbucket.org/mjsousa/matiec) installation to
 [![](https://images.microbadger.com/badges/image/jubnzv1/beremiz-doc-build.svg)](https://microbadger.com/images/jubnzv1/beremiz-doc-build "Get your own image badge on microbadger.com")
 
 Build container that contains complete environment with all required packages to build Beremiz IDE documentation regardless of host OS.
+
+Use the following command to build pdf and html documents:
+
+```bash
+docker run --rm -v $(BEREMIZ_SRC):/source -t jubnzv1/beremiz-doc-build xelatexpdf html
+```
